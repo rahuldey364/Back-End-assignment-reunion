@@ -5,9 +5,6 @@ const auth = require("../Auth/authentication")
 const postController = require("../controllers/postController")
 
 
-router.get("/test-me",(req,res)=>{
-    res.json({ans:"test me successful"})
-})
 
 // router.post("/api/user/register" , userController.createUser )
 router.post("/api/authenticate" , userController.authenticateUser )
