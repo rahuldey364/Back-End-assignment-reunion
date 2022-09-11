@@ -9,7 +9,7 @@ const PORT  = process.env.PORT || 3000
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-mongoose.connect("mongodb+srv://FunctionUp-cohort-1:TENBQZypGNobyoq3@cluster0.7jbgo.mongodb.net/reunion-DB?retryWrites=true&w=majority",{
+mongoose.connect(process.env.MONGODB_URI,{
     useNewUrlParser:true
 })
 .then(()=>{

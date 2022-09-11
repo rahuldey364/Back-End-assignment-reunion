@@ -18,10 +18,10 @@ const createUser = async (req, res) => {
         req.body.password = encryptedPassword
 
         let userData = await userModel.create(req.body)
-        res.json({ status: true, data: userData })
+        res.status(200).json({ status: true, data: userData })
 
     } catch (err) {
-        res.json({ status: false, error: err })
+        res.status(500).json({ status: false, error: err })
     }
 }
 
@@ -38,10 +38,10 @@ const authenticateUser = async (req, res) => {
 
         const token = jwt.sign({ userId: findUser._id }, "mySecretKey", { expiresIn: "24 hours" })
 
-        res.json({ status: true, data: { token: token } })
+        res.status(200).json({ status: true, data: { token: token } })
 
     } catch (err) {
-        res.json({ status: false, error: err })
+        res.status(500).json({ status: false, error: err })
     }
 }
 
@@ -52,9 +52,9 @@ const followUser = async (req,res) => {
         
         const updateFollowings = await userModel.findByIdAndUpdate(req.userId,  {$push:{followings:req.params.id}},{new:true})
 
-        return res.json({ status: true, message:"follow sucessful"})
+        return res.status(200).json({ status: true, message:"follow sucessful"})
     } catch (error) {
-        res.json({ status: false, error: error })
+        res.status(500).json({ status: false, error: error })
     }
 }
 
@@ -65,9 +65,9 @@ const unFollowUser = async (req,res) => {
         
         const updateFollowings = await userModel.findByIdAndUpdate(req.userId,  {$pull:{followings:req.params.id}},{new:true})
 
-        return res.json({ status: true, message:"follow sucessful"})
+        return res.status(200).json({ status: true, message:"follow sucessful"})
     } catch (error) {
-        res.json({ status: false, error: error })
+        res.status(500).json({ status: false, error: error })
     }
 }
 
@@ -81,9 +81,9 @@ const getUser = async (req,res) => {
             followings: userDetails.followings.length
         }
 
-        res.json({status:true , data: result})
+        res.status(200).json({status:true , data: result})
     } catch (error) {
-        res.json({ status: false, error: error })
+        res.status(500).json({ status: false, error: error })
     }
 }
 

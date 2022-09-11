@@ -11,29 +11,29 @@ const createPost = async (req, res) => {
         req.body.postedBy = req.userId
         const createdPost = await postModel.create(req.body)
 
-        res.json({ status: true, data: createdPost })
+        res.status(201).json({ status: true, data: createdPost })
 
     } catch (error) {
-        res.json({ status: false, error: error })
+        res.status(500).json({ status: false, error: error })
     }
 }
 
 const likePost = async (req, res) => {
     try {
         const updateLike = await postModel.findByIdAndUpdate(req.params.id, { $push: { likes: req.userId } }, { new: true })
-        res.json({ status: true, data: updateLike })
+        res.status(200).json({ status: true, data: updateLike })
     } catch (error) {
-        console.log(error)
-        res.json({ status: false, error: error })
+        // console.log(error)
+        res.status(500).json({ status: false, error: error })
     }
 }
 
 const unLikePost = async (req, res) => {
     try {
         const updateLike = await postModel.findByIdAndUpdate(req.params.id, { $pull: { likes: req.userId } }, { new: true })
-        res.json({ status: true, data: updateLike })
+        res.status(200).json({ status: true, data: updateLike })
     } catch (error) {
-        res.json({ status: false, error: error })
+        res.status(500).json({ status: false, error: error })
     }
 }
 
@@ -42,10 +42,10 @@ const commentPost = async (req, res) => {
 
         const updateComment = await postModel.findByIdAndUpdate(req.params.id, { $push: { comments: { comment: req.body.comment, commentedBy: req.userId } } }, { new: true })
         
-        res.json({ status: true, data: { commentId: updateComment.comments[updateComment.comments.length - 1]._id } })
+        res.status(200).json({ status: true, data: { commentId: updateComment.comments[updateComment.comments.length - 1]._id } })
 
     } catch (error) {
-        res.json({ status: false, error: error })
+        res.status(500).json({ status: false, error: error })
     }
 }
 
@@ -59,7 +59,7 @@ const getPost = async (req , res ) => {
             likes:fetchPost.likes.length,
             comments:fetchPost.comments.length
         }
-        res.json({status:true, data:result})
+        res.status(200).status(500).json({status:true, data:result})
 
     } catch (error) {
         res.json({ status: false, error: error })
@@ -83,9 +83,9 @@ const getAllPosts = async (req,res) => {
 
         }))
         // console.log(allcomments)
-        res.json({status:true, data:result})
+        res.status(200).json({status:true, data:result})
     } catch (error) {
-        res.json({ status: false, error: error })
+        res.status(500).json({ status: false, error: error })
     }
 }
 
@@ -94,9 +94,9 @@ const deletePost = async (req,res) => {
         const deletedPost = await postModel.findOneAndDelete({_id:req.params.id,postedBy:req.userId})
         if(!deletedPost) return res.json({status:false,message: "post does not belong to this account"})
 
-        res.json({status:true, data:"post deleted sucessfully"})
+        res.status(200).json({status:true, data:"post deleted sucessfully"})
     } catch (error) {
-        res.json({ status: false, error: error })
+        res.status(500).json({ status: false, error: error })
     }
 }
 

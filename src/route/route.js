@@ -9,7 +9,7 @@ router.get("/test-me",(req,res)=>{
     res.json({ans:"test me successful"})
 })
 
-router.post("/api/user/register" , userController.createUser )
+// router.post("/api/user/register" , userController.createUser )
 router.post("/api/authenticate" , userController.authenticateUser )
 router.post("/api/follow/:id" , auth.authentication, userController.followUser)
 router.post("/api/unfollow/:id" , auth.authentication, userController.unFollowUser)
@@ -21,4 +21,5 @@ router.post("/api/unlike/:id", auth.authentication, postController.unLikePost)
 router.post("/api/comment/:id" , auth.authentication , postController.commentPost)
 router.get("/api/posts/:id" ,postController.getPost)
 router.get("/api/all_posts" ,auth.authentication, postController.getAllPosts)
+
 module.exports = router
