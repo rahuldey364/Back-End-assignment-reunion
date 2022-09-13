@@ -188,7 +188,7 @@ describe("POST /api/unlike/:id", () => {
 })
 
 describe("POST /api/comment/:id", () => {
-    describe("userTwo should unlike userOne's post" , () => {
+    describe("userTwo should comment on userOne's post" , () => {
         it("it should check 200 status code and the response body" , async () => {
             const response = await request(app).post("/api/comment/" + userOneCreatedPostId).set('Authorization', 'Bearer ' + token2).set("params", userOneCreatedPostId)
             expect(response.statusCode).toBe(200)
