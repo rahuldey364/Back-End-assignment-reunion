@@ -6,7 +6,7 @@ const postController = require("../controllers/postController")
 
 
 
-// router.post("/api/user/register" , userController.createUser )
+ router.post("/api/user/register" , userController.createUser )
 router.post("/api/authenticate" , userController.authenticateUser )
 router.post("/api/follow/:id" , auth.authentication, userController.followUser)
 router.post("/api/unfollow/:id" , auth.authentication, userController.unFollowUser)

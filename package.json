@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon src/server.js",
-    "testing":"mocha"
+    "test": "env-cmd -f ./config/test.env jest --runInBand --forceExit",
+    "start": "env-cmd -f ./config/dev.env npx nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -14,9 +13,14 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.2",
+    "env-cmd": "^10.1.0",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.5",
     "nodemon": "^2.0.19"
+  },
+  "devDependencies": {
+    "jest": "^29.0.3",
+    "supertest": "^6.2.4"
   }
 }

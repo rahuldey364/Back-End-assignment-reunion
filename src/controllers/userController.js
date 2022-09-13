@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
         req.body.password = encryptedPassword
 
         let userData = await userModel.create(req.body)
-        res.status(200).json({ status: true, data: userData })
+        res.status(201).json({ status: true, data: userData })
 
     } catch (err) {
         res.status(500).json({ status: false, error: err })
@@ -31,14 +31,14 @@ const authenticateUser = async (req, res) => {
 
         if (!emailRegex.test(email)) return res.json({ status: false, error: "enter a valid email" })
         const findUser = await userModel.findOne({ email: email })
-        if (!findUser) return res.json({ status: false, error: "this email is not registered yet" })
+        if (!findUser) return res.status(400).json({ status: false, error: "this email is not registered yet" })
 
         const passwordCheck = await bcrypt.compare(password, findUser.password)
         if (!passwordCheck) return res.json({ status: false, error: "enter a valid password" })
 
         const token = jwt.sign({ userId: findUser._id }, "mySecretKey", { expiresIn: "24 hours" })
 
-        res.status(200).json({ status: true, data: { token: token } })
+        return res.status(200).json({ status: true, data: { token: token } })
 
     } catch (err) {
         res.status(500).json({ status: false, error: err })

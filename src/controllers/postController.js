@@ -5,13 +5,20 @@ const createPost = async (req, res) => {
     try {
         const { title, description } = req.body
 
-        if (!title) return res.json({ status: false, message: "title is a required field for creating a post" })
-        if (!description) return res.json({ status: false, message: "title is a required field for creating a post" })
+        if (!title) return res.status(400).json({ status: false, message: "title is a required field for creating a post" })
+        if (!description) return res.status(400).json({ status: false, message: "description is a required field for creating a post" })
 
         req.body.postedBy = req.userId
         const createdPost = await postModel.create(req.body)
 
-        res.status(201).json({ status: true, data: createdPost })
+        const result = {
+            postId : createdPost._id,
+            title:createdPost.title,
+            description:createdPost.description,
+            createdAt: createdPost.createdAt
+        }
+
+        res.status(201).json({ status: true, data: result})
 
     } catch (error) {
         res.status(500).json({ status: false, error: error })
@@ -59,7 +66,7 @@ const getPost = async (req , res ) => {
             likes:fetchPost.likes.length,
             comments:fetchPost.comments.length
         }
-        res.status(200).status(500).json({status:true, data:result})
+        res.status(200).status(200).json({status:true, data:result})
 
     } catch (error) {
         res.json({ status: false, error: error })
